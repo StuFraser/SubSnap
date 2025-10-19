@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectAuthToken } from "../reddit/RedditAuthSlice";
-import { redditFetch } from "../reddit/redditOAuth"; // Use our helper
+import { selectAuthToken } from "../features/auth/RedditAuthSlice";
+import { getSubRedditPosts } from "../reddit/redditOfficialApi"
 
 export default function RedditPosts({ subreddit = "reactjs", limit = 10 }) {
   const token = useSelector(selectAuthToken);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
 
   useEffect(() => {
     if (!token) return;
@@ -16,14 +17,7 @@ export default function RedditPosts({ subreddit = "reactjs", limit = 10 }) {
       setLoading(true);
       setError(null);
 
-      try {
-        const data = await redditFetch(`/r/${subreddit}/hot?limit=${limit}`, token);
-        setPosts(data.data.children.map((p) => p.data));
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
+      setPosts(getSubRedditPosts("reactjs", 10));
     };
 
     fetchPosts();

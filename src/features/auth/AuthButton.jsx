@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { redirectToRedditAuth, parseRedditAccessToken } from "./redditOAuth";
+import { redirectToRedditAuth, parseRedditAccessToken } from "../../reddit/redditOAuth";
 
 export default function AuthButton() {
   const dispatch = useDispatch();

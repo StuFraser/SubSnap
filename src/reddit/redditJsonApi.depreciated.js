@@ -1,6 +1,7 @@
 import { getByTitle } from "@testing-library/react";
+import { store } from "../store/store";
 
-const baseUrl = "https:/www.reddit.com";
+
 const basePageSize = 25;
 
 // Going to park this, the rate limits on the json api are to restrictive;
@@ -20,18 +21,26 @@ Endpoint                                  |  Description
 
 */
 
+/**
+ * @deprecated Use functions from redditOfficialApi.js instead.
+ */
+
 //Base request handler with retry mechanic
 const apiFetch = async (url, options = {}, retries = 3, delay = 1000) => {
     for (let i = 0; i < retries; i++) {
         try {
+
+            const token = selectAuthToken(store.getState());
+            if (!token) throw new Error("No auth token found in store");
+
             console.log("Making Request: ", url);
             const response = await fetch(url, options);
 
             //api rate limit checks
-
+            // will need a fluffing to handle limit exceptions
             const remaining = response.headers.get('x-ratelimit-remaining');
-            const reset = response.headers.get('x-ratelimit-reset');      
-            console.log(`Requests remaining: ${remaining}.  Reset: ${reset}`)  ;
+            const reset = response.headers.get('x-ratelimit-reset');
+            console.log(`Requests remaining: ${remaining}.  Reset: ${reset}`);
 
             if (remaining !== null && parseFloat(remaining) < 1) {
                 const waitTime = (parseFloat(reset) || 1) * 1000;
@@ -39,8 +48,6 @@ const apiFetch = async (url, options = {}, retries = 3, delay = 1000) => {
                 await new Promise(res => setTimeout(res, waitTime));
                 continue; // Retry after waiting
             }
-
-
 
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return response;
@@ -85,6 +92,14 @@ export const getSubRedditPosts = async (subReddit, limit = basePageSize, after =
         prevPage: responseData.before
     }
 
+};
+
+export const getUserProfile = async () => {
+    const url = new URL("/api/v1/me", baseUrl);
+    const response = await apiFetch(url);
+
+    const responseData = await response.json();
+    console.log(responseData);
 };
 
 

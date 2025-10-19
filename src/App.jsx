@@ -1,34 +1,20 @@
-import { useState } from 'react'
+import { useSelector } from 'react-redux';
 import './App.css'
-//import { getSubRedditPosts } from "./reddit/redditJsonApi.js"
-import {  redirectToRedditAuth, parseRedditAccessToken,redditFetch } from "./reddit/redditOAuth";
-import RedditPosts from "./components/TestComponent";
-import AuthButton from "./reddit/RedditLogin"
+import AuthButton from "./features/auth/AuthButton"
+import { selectIsAuthenticated } from "./features/auth/RedditAuthSlice"
+import UserProfile from './features/user/UserProfile';
+import Banner from "./layout/banner/banner";
 
 function App() {
 
-  const testFetch = async () => {
-    //const posts = await getSubRedditPosts("javascript");
-    //console.log(posts);
-
-redirectToRedditAuth();
-
-    const token = parseRedditAccessToken();
-    console.log("token: ", token);
-    const data = await redditFetch("/r/reactjs/hot", token);
-
-    console.log(data);
-
-  }
-
- // testFetch();
-
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   return (
     <>
+        <Banner />
       <h1> Subsnap</h1>
-       <AuthButton />
-      <RedditPosts subreddit="javascript" limit={10} />
+      {/*{isAuthenticated ? <UserProfile /> : <AuthButton />}
+      <RedditPosts subreddit="javascript" limit={10} />*/}
     </>
   )
 }
