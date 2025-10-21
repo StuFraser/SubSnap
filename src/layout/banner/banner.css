@@ -3,8 +3,8 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 80px;
-    background-color: #0077cc;
+    height: 100px;
+    background-color: #4d6b88;
     display: flex;
     align-items: center;
     z-index: 1000;
@@ -12,8 +12,8 @@
     padding: 0 1rem;
 }
 
-.banner-logo {
-    height: 70px;
+.banner-image {
+    height: 95%;
     width: auto;
 }
 
@@ -22,7 +22,10 @@
     align-items: center;
     gap: 10px;
     margin-left: auto;
+    max-height: 120px;
 }
+
+
 
 .profile {
     display: flex;

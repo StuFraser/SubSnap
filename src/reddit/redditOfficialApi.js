@@ -86,7 +86,6 @@ export const getSubRedditPosts = async (token, subReddit, limit = basePageSize, 
         nextPage: responseData.after,
         prevPage: responseData.before
     }
-
 };
 
 export const getUserProfile = async (token) => {
@@ -94,13 +93,14 @@ export const getUserProfile = async (token) => {
     const response = await apiFetch(token, url);
     const responseData = await response.json();
     //console.log(responseData); 
-
+    //console.log(responseData.subreddit);
 
     const userData = {
         id: responseData.id,
         name: responseData.name,
         avatar: responseData.avatar || responseData.icon_img,
-        karma: responseData.karma
+        karma: responseData.karma,
+        bio: responseData.subreddit.public_description
     }
 
     console.log("user data:", userData);

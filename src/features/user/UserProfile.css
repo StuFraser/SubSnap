@@ -1,0 +1,98 @@
+.banner-avatar {
+    height: 60px;
+    width: auto;
+}
+
+.avatar-boarder {
+    border: .2rem;
+    border-radius: 50px;
+    border-color: #ff5800;
+    border-style: solid;
+    margin: 5px;
+    background-color: #ff5800;
+    height: 65px;
+    width: 65px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.user-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center; /* Vertically center */
+  justify-content: center; /* Horizontally center */
+  z-index: 1000;
+}
+
+
+.user-popup-content {
+  position: relative;
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: auto;
+}
+
+.user-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.avatar-large {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.user-details h2,
+.user-details h3 {
+  margin: 0;
+  text-align: left;
+}
+
+.user-bio {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  height: 2rem;
+  width: 2rem;
+  font-size: 1.2rem;
+  line-height: 2rem;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: #ff5800;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}

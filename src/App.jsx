@@ -2,12 +2,10 @@ import { useSelector } from 'react-redux';
 import './App.css'
 import AuthButton from "./features/auth/AuthButton"
 import { selectIsAuthenticated } from "./features/auth/RedditAuthSlice"
-import UserProfile from './features/user/UserProfile';
+
 import Banner from "./layout/banner/banner";
 
 function App() {
-
-  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   return (
     <>

@@ -1,18 +1,26 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getUserProfile } from "../../reddit/redditOfficialApi";
+import { selectAuthToken } from "../auth/RedditAuthSlice";
 
 // Async thunk
 export const fetchUserProfile = createAsyncThunk(
   "user/fetchProfile",
   async (_, { getState, rejectWithValue }) => {
+    //console.log("About to get token")
     const token = selectAuthToken(getState());
+    //console.log("User Profile Token value:", token)
     try {
+      //throw "simulated error";
       const data = await getUserProfile(token);
+
+      //await new Promise((resolve) => setTimeout(resolve, 2500));
+
       return {
         id: data.id,
         name: data.name,
-        avatar: data.avatar || data.icon_img,
+        avatar: data.avatar,
         karma: data.karma,
+        bio: data.bio
       };
     } catch (err) {
       return rejectWithValue(err.message);
@@ -55,4 +63,6 @@ const userProfileSlice = createSlice({
 
 export const { clearUser } = userProfileSlice.actions;
 export const selectUserProfile = (state) => state.userProfile;
+export const selectUserProfileLoading = (state) => state.userProfile.loading;
+export const selectUserProfileError = (state) => state.userProfile.error;
 export default userProfileSlice.reducer;

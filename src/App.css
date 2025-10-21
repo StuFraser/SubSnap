@@ -18,6 +18,13 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+button{
+    color: white;
+    background-color: #ff5800;
+    border-color: #ff5800;
+    border-width: .2rem;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
