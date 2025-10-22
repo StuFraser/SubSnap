@@ -1,0 +1,7 @@
+.post-feed {
+    display: block;
+    position: flex;
+    overflow-y: auto;
+    padding: 1rem;
+    scroll-behavior: smooth;
+}

@@ -1,6 +1,7 @@
 
 const REDDIT_SCOPES = import.meta.env.VITE_REDDIT_DATA_URI
 const baseUrl = "https:/oauth.reddit.com";
+const basePageSize = 25;
 
 /**
  * apiFetch - Fetch wrapper for Reddit API with retries and rate-limit handling
@@ -67,8 +68,8 @@ export const getSubRedditPosts = async (token, subReddit, limit = basePageSize, 
 
     const response = await apiFetch(token, requestUrl);
     //console.log("FetchReponse: ", response);
-    const responseData = response.json();
-    //console.log("Json: ", responseData)
+    const responseData = await response.json();
+    console.log("Json: ", responseData)
 
     const posts = responseData.data.children.map(p => ({
         id: p.data.id,
@@ -92,6 +93,7 @@ export const getUserProfile = async (token) => {
     const url = new URL("/api/v1/me", baseUrl);
     const response = await apiFetch(token, url);
     const responseData = await response.json();
+
     //console.log(responseData); 
     //console.log(responseData.subreddit);
 
@@ -103,7 +105,7 @@ export const getUserProfile = async (token) => {
         bio: responseData.subreddit.public_description
     }
 
-    console.log("user data:", userData);
+    //console.log("user data:", userData);
 
     return userData;
 };

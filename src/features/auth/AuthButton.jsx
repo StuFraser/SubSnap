@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { redirectToRedditAuth, parseRedditAccessToken } from "../../reddit/redditOAuth";
-import "./AuthButton.css";
 
 export default function AuthButton() {
   const dispatch = useDispatch();
@@ -12,7 +11,7 @@ export default function AuthButton() {
   }, [dispatch]);
 
   return (
-    <button className="auth-button" onClick={redirectToRedditAuth}>
+    <button onClick={redirectToRedditAuth}>
       Login with Reddit
     </button>
   );

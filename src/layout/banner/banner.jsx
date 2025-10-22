@@ -7,6 +7,7 @@ import { selectIsAuthenticated, clearToken } from "../../features/auth/RedditAut
 import { selectUserProfile, fetchUserProfile, selectUserProfileLoading, selectUserProfileError, clearUser } from "../../features/user/UserProfileSlice";
 import UserProfile from "../../features/user/UserProfile";
 import Spinner from "../../layout/spinner/Spinner";
+import NavBar from "../navigation/navbar";
 import "./banner.css";
 
 
@@ -55,24 +56,27 @@ export default function Banner() {
 
   return (
     <header className="banner">
-      <img src={bannersmall} alt="Logo" className="banner-image" />
+      
+      <div className="banner-top">
+        <img src={bannersmall} alt="Logo" className="banner-image" />
+        <div className="banner-right">
+          {!isAuthenticated && <AuthButton />}
 
-      <div className="banner-right">
-        {!isAuthenticated && <AuthButton />}
+          {isAuthenticated && loading && <Spinner />}
 
-        {isAuthenticated && loading && <Spinner />}
-
-        {isAuthenticated && error && (
-          <div className="error-profile">
-            <span>Error loading profile</span>
-            <button onClick={() => dispatch(fetchUserProfile())}>Retry</button>
+          {isAuthenticated && error && (
+            <div className="error-profile">
+              <span>Error loading profile</span>
+              <button onClick={() => dispatch(fetchUserProfile())}>Retry</button>
+            </div>
+          )}
+          <div onClick={handleAvatarClick}>
+            {isAuthenticated && profile && <HeaderProfile />}
           </div>
-        )}
-        <div onClick={handleAvatarClick}>
-          {isAuthenticated && profile && <HeaderProfile />}
+          {isPopupOpen && <UserProfile onClose={handleClosePopup} onLogout={handleLogOut} />}
         </div>
-        {isPopupOpen && <UserProfile onClose={handleClosePopup} onLogout={handleLogOut} />}
       </div>
+      <NavBar />
     </header>
   );
 }

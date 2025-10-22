@@ -1,52 +1,79 @@
+/* --- Banner Container --- */
 .banner {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background-color: #4d6b88;
-    display: flex;
-    align-items: center;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    padding: 0 1rem;
+  position: sticky;        /* stays at top while scrolling feed */
+  top: 0;
+  width: 100%;
+  background-color: #4d6b88;
+  display: flex;
+  flex-direction: column;  /* stack top row + navbar vertically */
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* --- Top Row: Logo + Auth/Profile --- */
+.banner-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  height: 110px;
+}
+
+/* Logo image */
 .banner-image {
-    height: 95%;
-    width: auto;
+  height: 95%;
+  width: auto;
 }
 
+/* Right-side section (auth button or profile info) */
 .banner-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: auto;
-    max-height: 120px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
+/* --- Navbar Row (inside Banner) --- */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  background-color: #3d5870;  /* slightly darker strip under banner top */
+  padding: 0 1rem;
+}
 
-
+/* --- Profile + Avatar --- */
 .profile {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
 }
 
 .avatar {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    /* makes it round */
-    object-fit: cover;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
+/* --- Login Button --- */
 .login-btn {
-    padding: 6px 12px;
-    background-color: white;
-    color: #0077cc;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  padding: 6px 12px;
+  background-color: white;
+  color: #0077cc;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.login-btn:hover {
+  background-color: #0077cc;
+  color: white;
+}
+
+/* --- Optional: subtle border between top row and navbar --- */
+.banner-top {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
