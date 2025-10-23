@@ -4,11 +4,13 @@ import { useSelector } from "react-redux";
 import { getSubRedditPosts } from "../../reddit/redditOfficialApi.js"
 import { selectAuthToken } from "../auth/RedditAuthSlice.js";
 import "./PostFeed.css";
+import Post from "../post/Post.jsx";
+import Pagination from "../../layout/pagination/Pagination.jsx"
 
 export default function PostFeed({ type }) {
   const token = useSelector(selectAuthToken); // or however you store it
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -48,17 +50,18 @@ export default function PostFeed({ type }) {
   if (loading) return <p>Loading posts...</p>;
 
   return (
-    <div className="post-feed">
-      <h2>{type.charAt(0).toUpperCase() + type.slice(1)} Posts</h2>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            <h3>{post.title}</h3>
-            <p>By {post.author} | Score: {post.score}</p>
-            <a href={post.url} target="_blank" rel="noopener noreferrer">View Post</a>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <div className="post-feed">
+        <h2>{type.charAt(0).toUpperCase() + type.slice(1)} Posts</h2>
+        <ul>
+          {posts.map((post) => (
+            <li key={post.id}>
+              <Post post={post} />
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Pagination />
+    </>
   );
 }

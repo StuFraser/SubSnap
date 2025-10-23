@@ -1,0 +1,82 @@
+.post-card {
+  display: flex;
+  width: 100%;
+  max-width: 800px;
+  height: 180px; /* fixed card height */
+  margin: 1rem 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.post-thumbnail {
+  width: 180px; /* square thumbnail */
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.post-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+}
+
+.post-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.post-selfText {
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+
+.post-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-author {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: .8rem;
+}
+
+.author-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.external-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background-color: #e03d00;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.external-button svg {
+  width: 16px;
+  height: 16px;
+}

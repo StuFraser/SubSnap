@@ -69,18 +69,22 @@ export const getSubRedditPosts = async (token, subReddit, limit = basePageSize, 
     const response = await apiFetch(token, requestUrl);
     //console.log("FetchReponse: ", response);
     const responseData = await response.json();
-    console.log("Json: ", responseData)
+    //console.log("Json: ", responseData)
 
     const posts = responseData.data.children.map(p => ({
         id: p.data.id,
         title: p.data.title,
-        selfText: p.data.selfText,
+        selfText: p.data.selftext,
         author: p.data.author,
         url: p.data.url,
         score: p.data.score,
         over_18: p.data.over_18,
+        thumbnailUrl : p.data.thumbnail.startsWith("http") ? p.data.thumbnail : null,
         commentCount: p.data.commentCount,
+        authorAvatarUrl: null
     }));
+
+    //console.log("posts:",posts)
 
     return {
         posts,

@@ -5,3 +5,13 @@
     padding: 1rem;
     scroll-behavior: smooth;
 }
+
+.post-feed ul {
+  list-style: none;   
+  padding: 0;         
+  margin: 0;          
+}
+
+.post-feed li {
+  margin-bottom: 1rem;  /* optional spacing between posts */
+}
