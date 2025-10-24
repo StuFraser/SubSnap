@@ -20,6 +20,7 @@
   border-radius: 8px;
   display: flex;
   padding: 0 1rem;
+  position: relative;
 }
 
 .nav-item:hover {
@@ -38,4 +39,20 @@
 .nav-item.disabled-link:hover {
   color: rgba(255, 255, 255, 0.5);
   background-color: transparent;
+}
+
+.nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background-color: #ff5800;
+  transition: width 0.3s ease;
+}
+
+.nav-item:hover::after,
+.nav-item.active::after {
+  width: 100%;
 }

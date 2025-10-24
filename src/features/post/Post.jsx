@@ -36,7 +36,7 @@ const Post = (props) => {
 
     const truncate = (text, maxLength = 160) => {
         const returnValue = text?.length > maxLength ? text.slice(0, maxLength) + "…" : text;
-        console.log(returnValue);
+        //console.log(returnValue);
         return returnValue;
     }
 

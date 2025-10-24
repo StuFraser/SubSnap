@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectIsAuthenticated } from "../../features/auth/RedditAuthSlice"
 import "./NavBar.css";
@@ -18,13 +18,19 @@ const NavBar = () => {
   return (
     <nav className="main-nav">
       {links.map(({ path, label, protected: isProtected }) => (
-        <Link
+        <NavLink
           key={path}
           to={path}
-          className={isProtected && !isAuthenticated ? "nav-item disabled-link" : "nav-item"}
+
+          className={({ isActive }) => {
+            let classes = "nav-item";
+            if (isProtected && !isAuthenticated) classes += " disabled-link";
+            if (isActive) classes += " active";
+            return classes;
+          }}
         >
           {label}
-        </Link>
+        </NavLink>
       ))}
     </nav>
   );

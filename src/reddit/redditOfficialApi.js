@@ -58,7 +58,9 @@ const apiFetch = async (token, url, options = {}, retries = 3, delay = 1000) => 
     }
 };
 
-export const getSubRedditPosts = async (token, subReddit, limit = basePageSize, after = null) => {
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));  //Used for testing
+
+export const getSubRedditPosts = async (token, subReddit, after = null, limit = basePageSize ) => {
     const requestUrl = new URL(`${baseUrl}/r/${subReddit}/.json`);
     requestUrl.searchParams.append('limit', limit);
     if (after) {
@@ -70,6 +72,7 @@ export const getSubRedditPosts = async (token, subReddit, limit = basePageSize, 
     //console.log("FetchReponse: ", response);
     const responseData = await response.json();
     //console.log("Json: ", responseData)
+    //await delay(1000);
 
     const posts = responseData.data.children.map(p => ({
         id: p.data.id,
@@ -85,11 +88,13 @@ export const getSubRedditPosts = async (token, subReddit, limit = basePageSize, 
     }));
 
     //console.log("posts:",posts)
+    //console.log("Before:", responseData.data.before);
+    //console.log("After:", responseData.data.after);
 
     return {
         posts,
-        nextPage: responseData.after,
-        prevPage: responseData.before
+        nextPage: responseData.data.after,
+        prevPage: responseData.data.before
     }
 };
 

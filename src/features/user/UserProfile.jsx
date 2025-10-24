@@ -6,7 +6,7 @@ import "./UserProfile.css";
 export default function UserProfile({ onClose, onLogout }) {
   const { profile, loading, error } = useSelector(selectUserProfile);
 
-  console.log(profile)
+ //console.log(profile)
 
   // Handle edge cases
   if (loading) return <p>Loading user...</p>;

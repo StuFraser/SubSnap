@@ -33,7 +33,7 @@ const apiFetch = async (url, options = {}, retries = 3, delay = 1000) => {
             const token = selectAuthToken(store.getState());
             if (!token) throw new Error("No auth token found in store");
 
-            console.log("Making Request: ", url);
+            //console.log("Making Request: ", url);
             const response = await fetch(url, options);
 
             //api rate limit checks
@@ -99,7 +99,7 @@ export const getUserProfile = async () => {
     const response = await apiFetch(url);
 
     const responseData = await response.json();
-    console.log(responseData);
+    //console.log(responseData);
 };
 
 

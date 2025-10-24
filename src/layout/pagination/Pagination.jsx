@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import "./Pagination.css";
 
-const Pagination = () => {
+const Pagination = ({onNextClick, onPrevClick, before = null, after = null, page = 0}) => {
+    
+    console.log(`Before: ${before} After: ${after}, page:${page}`);
 
     return (
         <div className="pagination">
             <button
                 className="page-button"
-                onClick={() => fetchPosts("prev")}
+                onClick={() => onPrevClick()}
                 disabled={!before}
                 aria-label="Previous page"
             >
@@ -22,7 +24,7 @@ const Pagination = () => {
 
             <button
                 className="page-button"
-                onClick={() => fetchPosts("next")}
+                onClick={() => onNextClick()}
                 disabled={!after}
                 aria-label="Next page"
             >
