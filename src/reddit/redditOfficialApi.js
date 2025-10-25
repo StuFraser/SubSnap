@@ -61,7 +61,7 @@ const apiFetch = async (token, url, options = {}, retries = 3, delay = 1000) => 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));  //Used for testing
 
 export const getSubRedditPosts = async (token, subReddit, after = null, limit = basePageSize ) => {
-    const requestUrl = new URL(`${baseUrl}/r/${subReddit}/.json`);
+    const requestUrl = new URL(`${baseUrl}/r/${subReddit}/new`);
     requestUrl.searchParams.append('limit', limit);
     if (after) {
         requestUrl.searchParams.append('after', after);
@@ -97,6 +97,28 @@ export const getSubRedditPosts = async (token, subReddit, after = null, limit = 
         prevPage: responseData.data.before
     }
 };
+
+export const searchSubReddits = async (token, searchTerm) => {
+    const requestUrl = new URL(`${baseUrl}/subreddits/search?q=${searchTerm}`);
+    const response = await apiFetch(token, requestUrl);
+    const responseData = await response.json();
+    
+    console.log("Search Response: ", responseData);
+    const subreddits = responseData.data.children.map(r =>({
+        id: r.id,
+        name: r.Name,
+        displayName: r.display_name,
+        description: r.description,
+        url: r.url,
+        banner: r.banner_img,
+        icon: r.icon_img
+    })); 
+
+    console.log("Subreddit Listing:", subreddits);
+    return subreddits;
+
+
+}
 
 export const getUserProfile = async (token) => {
     const url = new URL("/api/v1/me", baseUrl);

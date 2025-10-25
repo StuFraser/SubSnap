@@ -1,6 +1,6 @@
 .main-nav {
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   gap: 1rem;
   width: 100%;
@@ -25,15 +25,15 @@
 
 .nav-item:hover {
   color: #f6f3f0;
-  background-color: #ff5800 ;
+  background-color: #ff5800;
 }
 
 .nav-item.disabled-link {
-  color: rgba(255, 255, 255, 0.5); 
-  background-color: transparent;    
-  cursor: not-allowed;              
-  pointer-events: none;             
-  opacity: 0.6;                     
+  color: rgba(255, 255, 255, 0.5);
+  background-color: transparent;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .nav-item.disabled-link:hover {
@@ -55,4 +55,15 @@
 .nav-item:hover::after,
 .nav-item.active::after {
   width: 100%;
+}
+
+.nav-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  padding-right: 1.6rem;
+}
+
+.nav-right>*:not(:last-child) {
+  margin-right: 1rem;
 }

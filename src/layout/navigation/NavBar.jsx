@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectIsAuthenticated } from "../../features/auth/RedditAuthSlice"
 import "./NavBar.css";
+import Search from "../../features/search/search";
 
 const NavBar = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -14,6 +15,10 @@ const NavBar = () => {
     { path: "/popular", label: "Popular", protected: true },
     { path: "/new", label: "New", protected: true },
   ];
+
+  const handleOnSearch = () => {
+    console.log("Searching")
+  }
 
   return (
     <nav className="main-nav">
@@ -31,7 +36,11 @@ const NavBar = () => {
         >
           {label}
         </NavLink>
+
       ))}
+      <div className="nav-right">
+        <Search onSearch={handleOnSearch} enabled={isAuthenticated} />
+      </div>
     </nav>
   );
 };
