@@ -1,7 +1,7 @@
 
 const REDDIT_SCOPES = import.meta.env.VITE_REDDIT_DATA_URI
 const baseUrl = "https:/oauth.reddit.com";
-const basePageSize = 25;
+const basePageSize = 5;
 
 /**
  * apiFetch - Fetch wrapper for Reddit API with retries and rate-limit handling
@@ -60,7 +60,7 @@ const apiFetch = async (token, url, options = {}, retries = 3, delay = 1000) => 
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));  //Used for testing
 
-export const getSubRedditPosts = async (token, subReddit, after = null, limit = basePageSize ) => {
+export const getSubRedditPosts = async (token, subReddit, after = null, limit = basePageSize) => {
     const requestUrl = new URL(`${baseUrl}/r/${subReddit}/new`);
     requestUrl.searchParams.append('limit', limit);
     if (after) {
@@ -82,7 +82,7 @@ export const getSubRedditPosts = async (token, subReddit, after = null, limit = 
         url: p.data.url,
         score: p.data.score,
         over_18: p.data.over_18,
-        thumbnailUrl : p.data.thumbnail.startsWith("http") ? p.data.thumbnail : null,
+        thumbnailUrl: p.data.thumbnail.startsWith("http") ? p.data.thumbnail : null,
         commentCount: p.data.commentCount,
         authorAvatarUrl: null
     }));
@@ -98,26 +98,39 @@ export const getSubRedditPosts = async (token, subReddit, after = null, limit = 
     }
 };
 
+const fullUrl = (url) => {
+    if (!url) return ""; 
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+        return url; 
+    }
+    if (url.startsWith("/r")) {
+        return `https://www.reddit.com${url}`;
+    }
+    return null;
+}
+
 export const searchSubReddits = async (token, searchTerm) => {
+
+    //console.log("About to search: ", searchTerm);
+
     const requestUrl = new URL(`${baseUrl}/subreddits/search?q=${searchTerm}`);
     const response = await apiFetch(token, requestUrl);
     const responseData = await response.json();
-    
+
     console.log("Search Response: ", responseData);
-    const subreddits = responseData.data.children.map(r =>({
-        id: r.id,
-        name: r.Name,
-        displayName: r.display_name,
-        description: r.description,
-        url: r.url,
-        banner: r.banner_img,
-        icon: r.icon_img
-    })); 
+    const subreddits = responseData.data.children.map(r => ({     
+        id: r.data.id,
+        name: r.data.Name,
+        displayName: r.data.display_name,
+        description: r.data.public_description,
+        url: fullUrl(r.data.url),
+        relativeUrl: r.data.url,
+        banner: r.data.banner_img,
+        icon: r.data.icon_img
+    }));
 
-    console.log("Subreddit Listing:", subreddits);
+    //console.log("Subreddit Listing:", subreddits);
     return subreddits;
-
-
 }
 
 export const getUserProfile = async (token) => {

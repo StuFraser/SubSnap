@@ -1,48 +1,36 @@
 // PostFeed.jsx
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPosts, prevPage, nextPageLocal, resetFeed } from "./PostFeedSlice.js"
-import "./PostFeed.css";
+import { useParams } from "react-router-dom";
+import { fetchPosts, prevPage, nextPageLocal, resetFeed, selectCurrentPosts, selectPagination } from "./PostFeedSlice.js";
 import Post from "../post/Post.jsx";
 import Pagination from "../../layout/pagination/Pagination.jsx";
 import Spinner from "../../layout/spinner/Spinner.jsx";
+import "./PostFeed.css";
 
-export default function PostFeed({ type }) {
+const PostFeed = () => {
+  const { subredditName } = useParams();
+  const subreddit = subredditName || "all"; // default subreddit
+
   const dispatch = useDispatch();
-  const feed = useSelector((state) => state.postFeed.feeds[type]);
-  const loading = feed?.loading ?? false;
-  const error = feed?.error ?? null;
-  const currentPageIndex = feed?.currentPageIndex ?? 0;
-  const pages = feed?.pages ?? [];
-  const afterTokens = feed?.afterTokens ?? [];
 
-  // Determine current posts to display
-  const currentPosts = pages[currentPageIndex] || [];
+  // Select feed data
+  const posts = useSelector(selectCurrentPosts(subreddit));
+  const { currentPageIndex, afterTokens, loading, error } = useSelector(selectPagination(subreddit));
 
-  // Map feed types to subreddit names
-  const getSubreddit = (type) => {
-    switch (type) {
-      case "favorites": return "javascript+reactjs";
-      case "popular": return "popular";
-      case "new": return "new";
-      default: return "all";
-    }
-  };
-
-  const subreddit = getSubreddit(type);
-
-  // Fetch first page on mount or when feed type changes
+  // Fetch first page when subreddit changes
   useEffect(() => {
+
+    console.log("Dispatch:", subreddit)
+
     dispatch(resetFeed({ subreddit }));
     dispatch(fetchPosts({ subreddit }));
   }, [subreddit, dispatch]);
 
   const handleNext = () => {
-    // If next page already cached, just advance index
-    if (currentPageIndex < pages.length - 1) {
+    if (currentPageIndex < posts.length - 1) {
       dispatch(nextPageLocal({ subreddit }));
     } else {
-      // Otherwise fetch the next page using the last after token
       const after = afterTokens[currentPageIndex] ?? null;
       dispatch(fetchPosts({ subreddit, after }));
     }
@@ -54,32 +42,37 @@ export default function PostFeed({ type }) {
     }
   };
 
-  if (loading) return (
-    <div className="post-loading">
-      <p>Loading posts...</p>
-      <Spinner />
-    </div>
-  );
+  if (loading) {
+    return (
+      <div className="post-loading">
+        <p>Loading posts...</p>
+        <Spinner />
+      </div>
+    );
+  }
 
-  if (error) return (
-<div className="post-error">
-  <p>Error loading posts: {error}</p>;
-  <button>Retry</button>
-</div>
-  ) 
+  if (error) {
+    return (
+      <div className="post-error">
+        <p>Error loading posts: {error}</p>
+        <button onClick={() => dispatch(fetchPosts({ subreddit }))}>Retry</button>
+      </div>
+    );
+  }
 
   return (
     <>
       <div className="post-feed">
-        <h2>{type.charAt(0).toUpperCase() + type.slice(1)} Posts</h2>
+        <h2>{`r/${subreddit}`}</h2>
         <ul>
-          {currentPosts.map((post) => (
+          {posts.map((post) => (
             <li key={post.id}>
               <Post post={post} />
             </li>
           ))}
         </ul>
       </div>
+
       <Pagination
         onNextClick={handleNext}
         onPrevClick={handlePrev}
@@ -89,4 +82,6 @@ export default function PostFeed({ type }) {
       />
     </>
   );
-}
+};
+
+export default PostFeed;

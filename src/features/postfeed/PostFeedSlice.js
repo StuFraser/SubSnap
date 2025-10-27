@@ -8,6 +8,9 @@ export const fetchPosts = createAsyncThunk(
   "postFeed/fetchPosts",
   async ({ subreddit, after = null }, { getState, rejectWithValue }) => {
     const token = selectAuthToken(getState());
+
+    console.log("Fetching: ", subreddit)
+
     try {
       const { posts, nextPage } = await getSubRedditPosts(token, subreddit, after);
       return { subreddit, posts, nextPage };
@@ -75,5 +78,32 @@ const postFeedSlice = createSlice({
   },
 });
 
+
+// Select feed object for a specific subreddit
+const selectFeed = (subredditName) => (state) =>
+  state.postFeed.feeds[subredditName] || {};
+
+// Select posts for the current page
+const selectCurrentPosts = (subredditName) => (state) => {
+  const feed = state.postFeed.feeds[subredditName] || {};
+  const currentPageIndex = feed.currentPageIndex ?? 0;
+  const pages = feed.pages ?? [];
+  return pages[currentPageIndex] || [];
+};
+
+// Select pagination info
+const selectPagination = (subredditName) => (state) => {
+  const feed = state.postFeed.feeds[subredditName] || {};
+  return {
+    currentPageIndex: feed.currentPageIndex ?? 0,
+    afterTokens: feed.afterTokens ?? [],
+    loading: feed.loading ?? false,
+    error: feed.error ?? null,
+  };
+};
+
+
+
 export const { prevPage, nextPageLocal, resetFeed } = postFeedSlice.actions;
+export { selectFeed, selectCurrentPosts, selectPagination }
 export default postFeedSlice.reducer;

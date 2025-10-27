@@ -11,7 +11,7 @@ import NavBar from "../navigation/navbar";
 import "./banner.css";
 
 
-export default function Banner() {
+const Banner = ({onSearch}) => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const profile = useSelector(selectUserProfile);
   const loading = useSelector(selectUserProfileLoading);
@@ -54,6 +54,11 @@ export default function Banner() {
     setIsPopupOpen(false);
   }
 
+  const handleOnSearch = (searchTerm) => {
+    //console.log("Banner.jsx", searchTerm);
+    onSearch(searchTerm);
+  }
+
   return (
     <header className="banner">
       
@@ -76,7 +81,9 @@ export default function Banner() {
           {isPopupOpen && <UserProfile onClose={handleClosePopup} onLogout={handleLogOut} />}
         </div>
       </div>
-      <NavBar />
+      <NavBar onSearch={handleOnSearch} />
     </header>
   );
 }
+
+export default Banner;

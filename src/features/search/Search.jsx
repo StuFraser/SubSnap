@@ -6,6 +6,9 @@ export default function Search({ onSearch, enabled }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        //console.log("search.jsx", query);
+
         if (query.trim()) {
             onSearch(query.trim());
         }

@@ -10,4 +10,11 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    sourcemap: true, // enables source maps even in builds
+  },
+  server: {
+    port: 5173, 
+  },
+
 })

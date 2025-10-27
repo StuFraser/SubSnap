@@ -9,7 +9,7 @@ export const store = configureStore({
     redditAuth: redditAuthReducer,
     userProfile: userProfileReducer,
     postFeed: postFeedReducer,
-    subRedditListing: subRedditListingReducer,
+    subreddits: subRedditListingReducer,
   },
 });
 
