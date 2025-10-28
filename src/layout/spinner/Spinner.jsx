@@ -1,10 +1,12 @@
 import "./Spinner.css";
 
 
-export default function Spinner() {
+const Spinner = () => {
   return (
     <div className="spinner">
       <div></div><div></div><div></div>
     </div>
   );
 }
+
+export default Spinner;

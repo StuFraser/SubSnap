@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "./Search.css";
 
-export default function Search({ onSearch, enabled }) {
+/**
+ * A simple search form that allows users to search for subreddits.
+ * @param {function} onSearch - A callback function that is called when the search form is submitted.
+ * @param {boolean} enabled - A boolean indicating whether the search form is enabled or not.
+ * @returns {React.ReactElement} - A React element representing the search form.
+ */
+const Search = ({ onSearch, enabled }) => {
     const [query, setQuery] = useState("");
 
     const handleSubmit = (e) => {
@@ -47,3 +53,5 @@ export default function Search({ onSearch, enabled }) {
         </form>
     );
 }
+
+export default Search;

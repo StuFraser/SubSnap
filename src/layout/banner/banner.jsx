@@ -8,15 +8,17 @@ import { selectUserProfile, fetchUserProfile, selectUserProfileLoading, selectUs
 import UserProfile from "../../features/user/UserProfile";
 import Spinner from "../../layout/spinner/Spinner";
 import NavBar from "../navigation/navbar";
+import useIsMobile from "../../hooks/useIsMobile";
 import "./banner.css";
 
 
-const Banner = ({onSearch}) => {
+const Banner = ({ onSearch }) => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const profile = useSelector(selectUserProfile);
   const loading = useSelector(selectUserProfileLoading);
   const error = useSelector(selectUserProfileError);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   const dispatch = useDispatch();
 
@@ -64,6 +66,8 @@ const Banner = ({onSearch}) => {
       
       <div className="banner-top">
         <img src={bannersmall} alt="Logo" className="banner-image" />
+
+        {!isMobile && (
         <div className="banner-right">
           {!isAuthenticated && <AuthButton />}
 
@@ -79,10 +83,10 @@ const Banner = ({onSearch}) => {
             {isAuthenticated && profile && <HeaderProfile />}
           </div>
           {isPopupOpen && <UserProfile onClose={handleClosePopup} onLogout={handleLogOut} />}
-        </div>
+        </div>)}
       </div>
       <NavBar onSearch={handleOnSearch} />
-    </header>
+    </header >
   );
 }
 

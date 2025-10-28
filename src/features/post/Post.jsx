@@ -1,31 +1,15 @@
 import { useState, useEffect } from "react";
+import useIsMobile from "../../hooks/useIsMobile";
 import "./Post.css"
 
-/*   
-    id: p.data.id,
-       title: p.data.title,
-       selfText: p.data.selfText,
-       author: p.data.author,
-       url: p.data.url,
-       score: p.data.score,
-       over_18: p.data.over_18,
-       commentCount: p.data.commentCount,
-*/
 
-
-function useIsMobile(breakpoint = 600) {
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= breakpoint);
-
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth <= breakpoint);
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, [breakpoint]);
-
-    return isMobile;
-}
-
-
+/**
+ * A React component that renders a post from Reddit.
+ * 
+ * @param {Object} props - an object containing the post to render.
+ * @param {Object} props.post - the post to render.
+ * @returns {JSX.Element} - a JSX element representing the post.
+ */
 const Post = (props) => {
 
     const { post } = props;

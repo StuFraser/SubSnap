@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { selectUserProfile } from "./UserProfileSlice";
 import "./UserProfile.css";
 
-export default function UserProfile({ onClose, onLogout }) {
+const UserProfile = ({ onClose, onLogout }) => {
   const { profile, loading, error } = useSelector(selectUserProfile);
 
  //console.log(profile)
@@ -39,3 +39,5 @@ export default function UserProfile({ onClose, onLogout }) {
 
   );
 }
+
+export default UserProfile;

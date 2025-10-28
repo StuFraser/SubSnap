@@ -6,8 +6,11 @@
   width: 100%;
   height: 40px;
   background-color: #4d6b88;
+  position: relative;
+  /* for absolute-positioned dropdown */
 }
 
+/* ===== Existing link styling (unchanged) ===== */
 .nav-item {
   color: white;
   text-decoration: none;
@@ -66,4 +69,114 @@
 
 .nav-right>*:not(:last-child) {
   margin-right: 1rem;
+}
+
+/* ===== New burger menu additions ===== */
+
+/* Hidden by default on desktop */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+/* Container for nav items — allows toggling visibility */
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .main-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.75rem;
+    height: 40px;
+    position: relative;
+  }
+
+  /* LEFT: burger + nav-links */
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 0 0 auto;
+    /* do not grow */
+  }
+
+  .menu-toggle {
+    display: block;
+    font-size: 1.4rem;
+    padding: 0.25rem;
+    margin: 0;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #4d6b88;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 1000;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-item {
+    height: auto;
+    width: auto;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  /* RIGHT: search should take remaining space */
+  .nav-right {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    /* grow to fill remaining space */
+    margin-left: 0.5rem;
+    /* small gap from burger */
+  }
+
+  /* Search input stretches to fill nav-right, keeping button visible */
+  .nav-right input[type="text"],
+  .nav-right input {
+    width: 92%;
+    box-sizing: border-box;
+  }
+
+  /* ensure any search button stays inline */
+  .nav-right button,
+  .nav-right .search-button,
+  .nav-right .search-icon {
+    flex: 0 0 auto;
+    /* button keeps its natural width */
+    height: 28px;
+    /* same as input */
+    border-radius: 0 4px 4px 0;
+    margin-left: 0;
+    /* snug against input */
+    padding: 0 0.75rem;
+    cursor: pointer;
+  }
 }

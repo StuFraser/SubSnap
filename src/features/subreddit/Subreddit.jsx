@@ -1,20 +1,23 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./subreddit.css";
-
-function useIsMobile(breakpoint = 600) {
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= breakpoint);
-
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth <= breakpoint);
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, [breakpoint]);
-
-    return isMobile;
-}
+import useIsMobile from "../../hooks/useIsMobile";
 
 
+/**
+ * A component that displays a subreddit card, which includes the subreddit's
+ * icon, name, description, and external link to the subreddit on Reddit.
+ * When the card is clicked, it navigates to the subreddit's relative URL.
+ * If the user is on a mobile device, it hides the subreddit banner and only displays
+ * the icon, name, description, and external link.
+ * @param {object} subreddit - The subreddit object with the following properties:
+ *   relativeUrl - The relative URL of the subreddit, e.g. /r/reactjs
+ *   displayName - The display name of the subreddit, e.g. "r/reactjs"
+ *   icon - The URL of the subreddit's icon, e.g. https://b.thumbs.redditmedia.com/8e6hFQV3Q4OQ9z2j6RA.png
+ *   banner - The URL of the subreddit's banner, e.g. https://b.thumbs.redditmedia.com/v9xOqkHvz4OQ9z2j6RA.png
+ *   description - The description of the subreddit, e.g. "A community for discussing ReactJS"
+ *   url - The external URL of the subreddit on Reddit, e.g. https://www.reddit.com/r/reactjs/
+ */
 const Subreddit = ({ subreddit }) => {
     const isMobile = useIsMobile();
     const navigate = useNavigate();

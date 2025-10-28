@@ -3,8 +3,12 @@ import { useSelector } from "react-redux";
 import { selectUserProfile } from "./UserProfileSlice";
 import "./userProfile.css";
 
-
-export default function HeaderProfile() {
+/**
+ * Displays the user's avatar from their profile info.
+ * If the user profile has not been loaded, returns null.
+ * @returns {JSX.Element} A JSX element containing the user's avatar.
+ */
+const HeaderProfile = () => {
   const { profile} = useSelector(selectUserProfile);
 
   //console.log("Profile:", profile)
@@ -21,3 +25,5 @@ export default function HeaderProfile() {
     </div>
   );
 }
+
+export default HeaderProfile;
