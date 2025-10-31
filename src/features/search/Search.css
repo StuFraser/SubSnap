@@ -2,14 +2,16 @@
   position: relative;
   display: flex;
   align-items: center;
-  width: 250px;
+  width: 100%;
+  max-width: 250px;
+  flex: 1; 
 }
 
 .search-input {
   width: 100%;
-  padding: 8px 36px 8px 12px; /* extra right padding for icon */
+  padding: 8px 36px 8px 12px;
   border: 1px solid #ccc;
-  border-radius: 9999px; /* makes it fully rounded */
+  border-radius: 9999px; 
   font-size: 14px;
   outline: none;
   transition: border-color 0.2s ease;
@@ -40,3 +42,18 @@
   width: 18px;
   height: 18px;
 }
+
+@media (max-width: 600px) {
+  .banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .search-container {
+    width: 100%;
+    max-width: none;
+  }
+}
+

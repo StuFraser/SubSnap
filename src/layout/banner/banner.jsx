@@ -12,6 +12,17 @@ import useIsMobile from "../../hooks/useIsMobile";
 import "./banner.css";
 
 
+/**
+ * The Banner component is responsible for rendering the topmost
+ * part of the app, which includes the logo, search bar, and user
+ * profile information. It also handles the user's authentication
+ * status and displays the appropriate buttons and information based on
+ * the user's authentication status.
+ *
+ * @param {function} onSearch - A function to be called when the user
+ * submits a search query.
+ * @return {JSX.Element} - The rendered Banner component.
+ */
 const Banner = ({ onSearch }) => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const profile = useSelector(selectUserProfile);

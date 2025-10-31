@@ -1,9 +1,11 @@
-* {
+*,
+*::before,
+*::after {
   font-family: 'Reddit Sans', sans-serif;
+  box-sizing: border-box;
 }
 
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   text-align: center;
   width: 100%;
@@ -13,8 +15,8 @@ html,
 body {
   height: 100%;
   overflow: hidden;
-  /* no browser scrollbar */
   background-color: #f6f3f0;
+  margin: 0;
 }
 
 button {
@@ -32,7 +34,8 @@ button {
 }
 
 button:hover {
-  border-color: #646cff;
+  border-color: green;
+  background-color: green;
 }
 
 button:focus,
@@ -43,7 +46,7 @@ button:focus-visible {
 .AppContent {
   margin-top: 150px;
   height: calc(100vh - 400px);
-  overflow-y: auto;
+  overflow-y: hidden;
   padding: 1rem;
 }
 

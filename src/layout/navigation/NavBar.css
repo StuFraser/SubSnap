@@ -1,23 +1,21 @@
 .main-nav {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
   width: 100%;
-  height: 40px;
   background-color: #4d6b88;
+  height: 40px;
+  padding: 0 1rem;
   position: relative;
-  /* for absolute-positioned dropdown */
 }
 
-/* ===== Existing link styling (unchanged) ===== */
 .nav-item {
   color: white;
   text-decoration: none;
   justify-content: center;
   font-weight: 500;
   transition: background-color 0.2s ease, color 0.2s ease;
-  height: 100%;
+  height: 2rem;
   width: 5rem;
   align-items: center;
   border-radius: 8px;
@@ -60,6 +58,12 @@
   width: 100%;
 }
 
+.nav-item-disabled {
+  color: gray;
+  cursor: not-allowed;
+  pointer-events: none; /* optional if you also want to fully disable clicks */
+}
+
 .nav-right {
   margin-left: auto;
   display: flex;
@@ -91,92 +95,61 @@
 }
 
 @media (max-width: 768px) {
-  .main-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 0.75rem;
-    height: 40px;
-    position: relative;
-  }
 
-  /* LEFT: burger + nav-links */
+  /* nav-left stays compact for menu button */
   .nav-left {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    flex: 0 0 auto;
-    /* do not grow */
+    flex: 0 0 auto;  /* do not grow */
   }
 
+  /* nav-right fills remaining horizontal space */
+  .nav-right {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;  /* fills remaining space */
+    justify-content: flex-end; /* keep content at right edge inside nav-right */
+  }
+
+  /* search-container fills nav-right */
+  .nav-right .search-container {
+    flex: 1 1 auto;   /* grow to fill nav-right */
+    width: 100%;
+    max-width: none;  /* remove desktop cap on mobile */
+  }
+
+  /* input inside search-container fills it */
+  .nav-right input[type="text"],
+  .nav-right input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* burger button stays visible */
   .menu-toggle {
-    display: block;
+    display: block; /* already in your existing mobile CSS */
     font-size: 1.4rem;
-    padding: 0.25rem;
     margin: 0;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
+    padding: 0.25rem;
   }
 
+  /* nav-links dropdown styling unchanged */
   .nav-links {
-    display: none;
+    display: none;           /* hidden by default */
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    background-color: #4d6b88;
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: #4d6b88;
     z-index: 1000;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   }
 
   .nav-links.open {
-    display: flex;
-  }
-
-  .nav-item {
-    height: auto;
-    width: auto;
-    padding: 0.4rem 0.9rem;
-    border-radius: 6px;
-    white-space: nowrap;
-  }
-
-  /* RIGHT: search should take remaining space */
-  .nav-right {
-    display: flex;
-    align-items: center;
-    flex: 1 1 auto;
-    /* grow to fill remaining space */
-    margin-left: 0.5rem;
-    /* small gap from burger */
-  }
-
-  /* Search input stretches to fill nav-right, keeping button visible */
-  .nav-right input[type="text"],
-  .nav-right input {
-    width: 92%;
-    box-sizing: border-box;
-  }
-
-  /* ensure any search button stays inline */
-  .nav-right button,
-  .nav-right .search-button,
-  .nav-right .search-icon {
-    flex: 0 0 auto;
-    /* button keeps its natural width */
-    height: 28px;
-    /* same as input */
-    border-radius: 0 4px 4px 0;
-    margin-left: 0;
-    /* snug against input */
-    padding: 0 0.75rem;
-    cursor: pointer;
+    display: flex;  /* visible when burger toggled */
   }
 }

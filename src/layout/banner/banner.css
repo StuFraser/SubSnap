@@ -1,13 +1,16 @@
 /* --- Banner Container --- */
 .banner {
-  position: sticky;        /* stays at top while scrolling feed */
+  position: sticky;
   top: 0;
   width: 100%;
   background-color: #4d6b88;
   display: flex;
-  flex-direction: column;  /* stack top row + navbar vertically */
-  z-index: 1000;
+  flex-direction: column;
+  z-index: 99990;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 0;
+  padding: 0;
+  left: 0;
 }
 
 /* --- Top Row: Logo + Auth/Profile --- */

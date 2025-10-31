@@ -8,6 +8,7 @@ import ProtectedRoute from './layout/protectedroute/ProtectedRoute';
 import SubRedditListing from "./features/subredditlisting/SubRedditListing";
 import { selectIsAuthenticated } from './features/auth/RedditAuthSlice';
 import { fetchSubredditsBySearch } from './features/subredditlisting/SubRedditListingSlice';
+import AuthWatcher from './features/authwatcher/AuthWatcher';
 
 function App() {
 
@@ -24,17 +25,18 @@ function App() {
 
   return (
     <>
-      <div className='AppLayout'>
+      <AuthWatcher />
+      <section>
         <Banner onSearch={handleSearch} />
-        <div className='main-content'>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/r/:subredditName" element={<PostFeed />} />
-            <Route path="*" element={<div>Page not found</div>} />
-            <Route path="/callback" element={<Navigate to="/" replace />} />
-            <Route path="/search" element={<ProtectedRoute><SubRedditListing /></ProtectedRoute>} />
-          </Routes>
-        </div >
+      </section>
+      <div className='AppLayout'>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/r/:subredditName" element={<PostFeed />} />
+          <Route path="*" element={<div>Page not found</div>} />
+          <Route path="/callback" element={<Navigate to="/" replace />} />
+          <Route path="/search" element={<ProtectedRoute><SubRedditListing /></ProtectedRoute>} />
+        </Routes>
       </div >
     </>
   )

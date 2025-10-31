@@ -7,17 +7,25 @@ import Search from "../../features/search/search";
 import MobileProfile from "../../features/user/MobileProfile";
 import useIsMobile from "../../hooks/useIsMobile";
 
+/************************************************************* 
+ * 
+ * Feel this part is getting real muddy real quick.
+ * Seems mishmash of auth, navigation and mobile responsiveness
+ * is causing things to get reall fragile. May need to refactor
+ * 
+*************************************************************/
+
 const NavBar = ({ onSearch }) => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const [menuOpen, setMenuOpen] = useState(false);
   const isMobile = useIsMobile();
 
   // Map labels to subreddit routes
-  const navItems = [
-    { label: "Home", subreddit: "all" },
-    { label: "Ask", subreddit: "AskReddit" },
-    { label: "Popular", subreddit: "popular" },
-  ];
+  const navItems = [
+    { label: "Home", subreddit: "all", protected: true },
+    { label: "Ask", subreddit: "AskReddit", protected: true },
+    { label: "Popular", subreddit: "popular", protected: true },
+  ];
 
   const handleOnSearch = (searchTerm) => {
     onSearch(searchTerm);
@@ -36,16 +44,22 @@ const NavBar = ({ onSearch }) => {
         </button>
 
 
+
         <div className={`nav-links ${menuOpen ? "open" : ""}`}>
           {isAuthenticated && isMobile && <MobileProfile />}
-          {navItems.map(({ label, subreddit }) => (
+
+          {navItems.map(({ label, subreddit, protected: requiresAuth }) => (
             <NavLink
               key={subreddit}
               to={`/r/${subreddit}`}
               className={({ isActive }) =>
-                `nav-item${isActive ? " active" : ""}`
+                `nav-item${isActive ? " active" : ""} ${requiresAuth && !isAuthenticated ? "nav-item-disabled" : ""
+                }`
               }
-              onClick={() => setMenuOpen(false)} // close menu after selecting
+              onClick={(e) => {
+                if (requiresAuth && !isAuthenticated) e.preventDefault();
+                setMenuOpen(false);
+              }}
             >
               {label}
             </NavLink>
