@@ -1,8 +1,8 @@
-import type { User } from '../shared/models/User';
+import type { User } from '@/shared/models/User';
 import { redditFetch } from './redditFetch';
 
 
-export async function fetchCurrentUser(): Promise<User> {
+export const fetchCurrentUser = async (): Promise<User> => {
   const response = await redditFetch('https://oauth.reddit.com/api/v1/me');
 
   if (!response.ok) {

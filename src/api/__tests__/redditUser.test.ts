@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { fetchCurrentUser } from '../redditapi';
+import { fetchCurrentUser } from '../redditUser';
 import * as redditFetchModule from '../redditFetch';
 import { sessionService } from '../../shared/utils/SessionService';
 

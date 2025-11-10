@@ -9,7 +9,7 @@ const REDDIT_AUTHORIZE_URL = 'https://www.reddit.com/api/v1/authorize';
 const REDDIT_TOKEN_URL = 'https://www.reddit.com/api/v1/access_token';
 
 // Generate a random code verifier
-export function generateCodeVerifier(length = 128): string {
+export const generateCodeVerifier = (length = 128): string => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
   let verifier = '';
   for (let i = 0; i < length; i++) {
@@ -18,7 +18,7 @@ export function generateCodeVerifier(length = 128): string {
   return verifier;
 }
 
-export async function generateCodeChallenge(verifier: string): Promise<string> {
+export const generateCodeChallenge = async (verifier: string): Promise<string> => {
   const encoder = new TextEncoder();
   const data = encoder.encode(verifier);
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
@@ -27,8 +27,7 @@ export async function generateCodeChallenge(verifier: string): Promise<string> {
   return btoa(hashString).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
-
-export async function redirectToRedditLogin() {
+export const login = async () => {
   const state = crypto.randomUUID();
   const verifier = generateCodeVerifier();
 
@@ -52,7 +51,7 @@ export async function redirectToRedditLogin() {
 }
 
 // Exchange code for access token
-export async function fetchAccessToken(code: string, returnedState: string): Promise<AuthToken> {
+export const fetchAccessToken = async (code: string, returnedState: string): Promise<AuthToken> => {
   const storedState = sessionService.getState();
   const verifier = sessionService.getVerifier();
 
@@ -83,6 +82,9 @@ export async function fetchAccessToken(code: string, returnedState: string): Pro
   const data = await response.json() as AuthToken;
 
   // store token and cleanup verifier/state
+
+  console.log("Fetched access token:", data.access_token);
+
   sessionService.setToken(data);
   sessionService.removeVerifier();
   sessionService.removeState();

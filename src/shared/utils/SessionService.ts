@@ -29,6 +29,9 @@ export const sessionService = {
 
   // Tokens
   setToken(token: AuthToken) {
+
+    console.log("Storing access token:", token.access_token);
+
     sessionStorage.setItem(ACCESS_TOKEN_KEY, token.access_token);
     if (token.refresh_token) {
       sessionStorage.setItem(REFRESH_TOKEN_KEY, token.refresh_token);

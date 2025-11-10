@@ -1,0 +1,14 @@
+:root {
+  /* Primary brand colors */
+  --color-primary: #ff5800;
+  --color-secondary: #FF6F61;
+  --color-accent: #FFC857;
+
+  /* Text colors */
+  --color-text-light: #FFFFFF;
+  --color-text-dark: #2C2B33;
+
+  /* Backgrounds */
+  --color-bg-light: #F5F5F5;
+  --color-bg-dark: #2C2B33;
+}
