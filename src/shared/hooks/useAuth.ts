@@ -115,6 +115,8 @@ export const useAuth = () => {
       throw new Error("Failed to fetch access token: " + errText);
     }
 
+ await new Promise((resolve) => setTimeout(resolve, 1000));
+
     const data = (await response.json()) as AuthToken;
     sessionService.setToken(data);
     setToken(data);
@@ -122,7 +124,7 @@ export const useAuth = () => {
     try {
       const currentUser = await fetchCurrentUser();
 
-      console.log("Logged in user:", currentUser);
+      //console.log("Logged in user:", currentUser);
 
       setUser(currentUser);
     } catch {

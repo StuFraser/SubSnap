@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import './styles/constants.css'
 import App from './App.tsx'
-import { AuthProvider } from './shared/contex/AuthContext'
+import { AuthProvider } from './shared/context/AuthContext.tsx'
 
 
 createRoot(document.getElementById('root')!).render(

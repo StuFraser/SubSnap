@@ -1,8 +1,7 @@
-// src/features/auth/Callback.tsx
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-//import { useAuth } from "@/shared/hooks/useAuth";
-import { useAuthContext } from "@/shared/contex/AuthContext";
+import { useAuthContext } from "@/shared/context/AuthContext";
+import Spinner from "@/features/ui/spinner/Spinner";
 
 const Callback: React.FC = () => {
   const navigate = useNavigate();
@@ -33,7 +32,6 @@ const Callback: React.FC = () => {
 
       try {
         await completeLogin(code, state);
-        // ✅ Remove query params so callback can’t rerun
         window.history.replaceState({}, document.title, window.location.pathname);
         navigate("/");
       } catch (err) {
@@ -45,7 +43,7 @@ const Callback: React.FC = () => {
     runLogin();
   }, [completeLogin, navigate]);
 
-  return <p>Finishing login…</p>;
+  return <div><Spinner /></div>;
 };
 
 export default Callback;

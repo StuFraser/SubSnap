@@ -7,7 +7,7 @@ const LoginButton: React.FC = () => {
 
   return (
     <button className="login-button" onClick={login} disabled={isLoading}>
-      {isLoading ? "Loading..." : "Login with Reddit"}
+      {isLoading ? "Loading..." : "Login"}
     </button>
   );
 };
