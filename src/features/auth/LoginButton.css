@@ -1,0 +1,14 @@
+.login-button{
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    padding: 16px;
+    margin: 2px;
+    border-radius: 8px;
+    font-size: larger;
+    font-family: 'Reddit Sans', sans-serif;
+}
+
+.login-button:hover {
+    background-color: var(--color-secondary);
+    cursor: pointer;
+}

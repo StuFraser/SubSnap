@@ -1,0 +1,14 @@
+.snoo-container {
+  position: fixed;   
+  bottom: 20px;     
+  right: 20px;       
+  width: 20vw;       
+  height: auto;      
+  z-index: 1000;     
+}
+
+.snoo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; 
+}

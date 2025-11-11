@@ -1,0 +1,42 @@
+src
+├── api
+│   ├── auth.ts
+│   ├── redditFetch.ts
+│   ├── redditUser.ts
+│   ├── subredditList.ts
+│   ├── subredditPost.ts
+│   └── __tests__
+│       ├── redditUser.test.ts
+│       ├── subredditList.test.ts
+│       └── subredditPost.test.ts
+├── app
+│   └── store.ts
+├── App.css
+├── App.tsx
+├── components
+│   ├── layout
+│   ├── posts
+│   └── ui
+├── features
+│   ├── auth
+│   ├── posts
+│   ├── subreddit
+│   └── ui
+├── index.css
+├── main.tsx
+├── setupTests.ts
+├── shared
+│   ├── hooks
+│   ├── models
+│   │   ├── AuthToken.ts
+│   │   ├── Post.ts
+│   │   ├── SearchResult.ts
+│   │   ├── Subreddit.ts
+│   │   └── User.ts
+│   └── utils
+│       ├── SessionService.ts
+│       └── __tests__
+│           └── SessionService.test.ts
+└── styles
+
+19 directories, 21 files
