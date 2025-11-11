@@ -30,7 +30,7 @@ export const sessionService = {
   // Tokens
   setToken(token: AuthToken) {
 
-    console.log("Storing access token:", token.access_token);
+    //console.log("Storing access token:", token.access_token);
 
     sessionStorage.setItem(ACCESS_TOKEN_KEY, token.access_token);
     if (token.refresh_token) {

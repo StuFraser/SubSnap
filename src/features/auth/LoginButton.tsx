@@ -1,21 +1,13 @@
 import React from "react";
-import { login } from "@/api/auth";
+import { useAuth } from "@/shared/hooks/useAuth";
 import "./LoginButton.css";
 
-
-
 const LoginButton: React.FC = () => {
-    
-  const handleLogin = () => {
-    login(); 
-  };
+  const { login, isLoading } = useAuth();
 
   return (
-    <button
-      className="login-button"
-      onClick={handleLogin}
-    >
-      Login
+    <button className="login-button" onClick={login} disabled={isLoading}>
+      {isLoading ? "Loading..." : "Login with Reddit"}
     </button>
   );
 };

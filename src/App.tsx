@@ -15,7 +15,7 @@ function App() {
       </div>
       <Router>
         <Routes>
-          <Route path="/auth/callback" element={<Callback />} />
+          <Route path="/callback" element={<Callback />} />
         </Routes>
       </Router>
     </>

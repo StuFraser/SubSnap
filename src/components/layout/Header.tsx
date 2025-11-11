@@ -1,11 +1,14 @@
 import React from "react";
 import "./Header.css";
-import { useAuth } from "@/shared/hooks/useAuth";
-//import UserAvatar from "@/features/auth/UserAvatar";
+import { useAuthContext } from "@/shared/contex/AuthContext";
+import UserAvatar from "@/features/auth/UserAvatar";
 import LoginButton from "@/features/auth/LoginButton";
 
 const Header: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { user, logout, isLoading } = useAuthContext();
+  const isAuthenticated = !!user;
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <header className="header">
@@ -13,7 +16,11 @@ const Header: React.FC = () => {
         <img src="/banner-large.png" alt="SubSnap Logo" />
       </div>
       <div className="header-user">
-        {isAuthenticated && user ? "user" /*<UserAvatar user={user} />*/ : <LoginButton />}
+        {isAuthenticated && user ? (
+          <UserAvatar user={user} onLogout={logout} />
+        ) : (
+          <LoginButton />
+        )}
       </div>
     </header>
   );

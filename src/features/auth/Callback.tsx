@@ -1,30 +1,51 @@
 // src/features/auth/Callback.tsx
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { fetchAccessToken } from '@/api/auth';
+import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+//import { useAuth } from "@/shared/hooks/useAuth";
+import { useAuthContext } from "@/shared/contex/AuthContext";
 
-const Callback = () => {
+const Callback: React.FC = () => {
   const navigate = useNavigate();
+  const { completeLogin } = useAuthContext();
+  const hasHandled = useRef(false); // prevent double invocation
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    const state = urlParams.get('state');
+    if (hasHandled.current) return;
+    hasHandled.current = true;
 
-    if (code && state) {
-      fetchAccessToken(code, state)
-        .then(() => {
-          // token is now stored in sessionService
-          navigate('/'); // redirect to home or dashboard
-        })
-        .catch(err => {
-          console.error(err);
-          navigate('/login'); // or show an error
-        });
-    }
-  }, [navigate]);
+    const runLogin = async () => {
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get("code");
+      const state = url.searchParams.get("state");
+      const error = url.searchParams.get("error");
 
-  return <div>Loading...</div>;
+      if (error) {
+        console.error("OAuth error:", error);
+        navigate("/");
+        return;
+      }
+
+      if (!code || !state) {
+        console.error("Missing code or state in callback URL");
+        navigate("/");
+        return;
+      }
+
+      try {
+        await completeLogin(code, state);
+        // ✅ Remove query params so callback can’t rerun
+        window.history.replaceState({}, document.title, window.location.pathname);
+        navigate("/");
+      } catch (err) {
+        console.error("Login failed:", err);
+        navigate("/");
+      }
+    };
+
+    runLogin();
+  }, [completeLogin, navigate]);
+
+  return <p>Finishing login…</p>;
 };
 
 export default Callback;
