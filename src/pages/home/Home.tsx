@@ -1,16 +1,11 @@
 import LoginButton from "@/features/auth/LoginButton";
 import { useAuthContext } from "@/shared/context/AuthContext";
-import Spinner from "@/features/ui/spinner/Spinner";
 import "./Home.css"
 
 const Home = () => {
 
-    const { user, isLoading } = useAuthContext();
+    const { user } = useAuthContext();
     const isAuthenticated = !!user;
-
-    if (isLoading) {
-        return (<Spinner />);
-    }
     if (isAuthenticated && user) {
         return (
             <div>

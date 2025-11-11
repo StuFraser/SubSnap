@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "@/shared/context/AuthContext";
-import Spinner from "@/features/ui/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 
 const Callback: React.FC = () => {
   const navigate = useNavigate();

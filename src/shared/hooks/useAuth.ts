@@ -35,7 +35,7 @@ const generateCodeChallenge = async (verifier: string) => {
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<AuthToken | null>(sessionService.getToken() || null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const hasInitialized = useRef(false);
 
@@ -51,9 +51,10 @@ export const useAuth = () => {
         } catch {
           setUser(null);
           sessionService.clearToken();
+        } finally {
+          setIsLoading(false);
         }
       }
-      setIsLoading(false);
     };
 
     init();
@@ -61,6 +62,7 @@ export const useAuth = () => {
 
   // --- login ---
   const login = async () => {
+
     const state = crypto.randomUUID();
     const verifier = generateCodeVerifier();
 
@@ -85,10 +87,13 @@ export const useAuth = () => {
 
   // --- complete login (after callback) ---
   const completeLogin = async (code: string, returnedState: string) => {
+
+    setIsLoading(true);
+
     const storedState = sessionService.getState();
     const verifier = sessionService.getVerifier();
 
-    console.log("Stored State:", storedState);
+    //console.log("Stored State:", storedState);
 
     if (!verifier || !storedState || storedState !== returnedState) {
       throw new Error("Invalid PKCE state or verifier");
@@ -111,11 +116,12 @@ export const useAuth = () => {
     });
 
     if (!response.ok) {
+      setIsLoading(false);
       const errText = await response.text();
       throw new Error("Failed to fetch access token: " + errText);
     }
 
- await new Promise((resolve) => setTimeout(resolve, 1000));
+    //await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const data = (await response.json()) as AuthToken;
     sessionService.setToken(data);
@@ -131,7 +137,7 @@ export const useAuth = () => {
       console.error("Failed to fetch user after login");
       setUser(null);
     }
-
+    setIsLoading(false);
 
     sessionService.removeVerifier();
     sessionService.removeState();
