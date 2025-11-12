@@ -15,7 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/callback" element={<Callback />} />
-            <Route path="/subreddit/:name" element={<Subreddit />} />
+            <Route path="/subreddit/:name" element={<Subreddit name='Popular' />} />
           </Routes>
         </div>
       </Router>

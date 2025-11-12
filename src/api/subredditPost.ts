@@ -1,14 +1,22 @@
-
 import { redditFetch } from "./redditFetch";
 import type { Post } from "@/shared/models/Post";
 
-const pageSize = 25; 
+const pageSize = 25;
 
-const fetchSubredditPost = async (subredditName: string, after: string = '', limit: number = pageSize): Promise<Post[]>  => {  
+export interface FetchSubredditPostResponse {
+  posts: Post[];
+  after: string | null;
+}
+
+export const fetchSubredditPost = async (
+  subredditName: string,
+  after: string = "",
+  limit: number = pageSize
+): Promise<FetchSubredditPostResponse> => {
   const requestUrl = new URL(`https://oauth.reddit.com/r/${subredditName}/new`);
-  requestUrl.searchParams.append('limit', limit.toString());
+  requestUrl.searchParams.append("limit", limit.toString());
   if (after) {
-    requestUrl.searchParams.append('after', after);
+    requestUrl.searchParams.append("after", after);
   }
 
   const response = await redditFetch(requestUrl.toString());
@@ -20,9 +28,9 @@ const fetchSubredditPost = async (subredditName: string, after: string = '', lim
   const data = await response.json();
 
   const posts: Post[] = data.data.children.map((child: any) => ({
-    id: child.data.id,
+    id: child.data.name, // use the Reddit "fullname" (t3_xxxxx) for paging
     title: child.data.title,
-    selfText: child.data.selftext || '',
+    selfText: child.data.selftext || "",
     author: child.data.author,
     url: child.data.url,
     score: child.data.score,
@@ -32,7 +40,8 @@ const fetchSubredditPost = async (subredditName: string, after: string = '', lim
     authorAvatarUrl: child.data.snoovatar_img || null,
   }));
 
-  return posts;
-}
-
-export { fetchSubredditPost };
+  return {
+    posts,
+    after: data.data.after, // carry forward the Reddit pagination token
+  };
+};

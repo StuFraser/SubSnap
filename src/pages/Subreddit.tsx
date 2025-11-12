@@ -1,34 +1,61 @@
-// src/pages/Subreddit.tsx
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchPostsPage, selectPostsState } from "@/app/store/subredditPostSlice";  
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPostsPage, selectPostsState, clearPosts } from "@/app/store/subredditPostSlice";
 import type { AppDispatch } from "@/app/store";
+import { Pager } from "@/components/ui/pager/pager";
 
-const Subreddit: React.FC = () => {
+interface SubredditProps {
+  name: string; // e.g., "reactjs"
+}
+
+const Subreddit: React.FC<SubredditProps> = ({ name }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { pages, currentPage, isLoading, error } = useSelector(selectPostsState);
+  const { posts, after, currentPage, isLoading, error } = useSelector(selectPostsState);
 
+  // Fetch first page on mount
   useEffect(() => {
-    // On mount, fetch first page of "popular" subreddit
-    dispatch(fetchPostsPage({ subreddit: "popular", page: 1 }));
-  }, [dispatch]);
+    dispatch(fetchPostsPage({ subreddit: name, page: 1 }));
+  }, [dispatch, name]);
 
-  const posts = pages[currentPage] || [];
+  const handleNext = () => {
+    if (!after) return;
+    dispatch(fetchPostsPage({ subreddit: name, after, page: currentPage + 1 }));
+  };
+
+  const handlePrev = () => {
+    if (currentPage <= 1) return;
+    // Resetting 'after' to undefined for previous page; slice fetches fresh
+    dispatch(fetchPostsPage({ subreddit: name, page: currentPage - 1 }));
+  };
 
   return (
-    <div style={{ padding: "1rem" }}>
-      <h1>Popular Posts</h1>
+    <div>
+      <h2>/r/{name}</h2>
 
       {isLoading && <p>Loading posts...</p>}
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
       <ul>
         {posts.map((post) => (
-          <li key={post.id} style={{ marginBottom: "1rem" }}>
-            <strong>{post.title}</strong> by {post.author} | {post.score} points
+          <li key={post.id}>
+            <a href={post.url} target="_blank" rel="noopener noreferrer">{post.title}</a>
+            <p>by {post.author} | {post.score} points | {post.commentCount} comments</p>
           </li>
         ))}
       </ul>
+
+      <Pager
+        currentPage={currentPage}
+        hasNext={!!after}
+        onNext={handleNext}
+        onPrev={handlePrev}
+        onRefresh={() => {
+          dispatch(clearPosts());
+          dispatch(fetchPostsPage({ subreddit: name, page: 1 }));
+        }}
+        redditUrl={`https://www.reddit.com/r/${name}/new`}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

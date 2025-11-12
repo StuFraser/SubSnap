@@ -1,0 +1,46 @@
+.pager {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.pager-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;              /* circular button size */
+  height: 40px;
+  border-radius: 50%;       /* makes it round */
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s, transform 0.2s;
+  padding: 0;
+}
+
+.pager-button:hover:not(:disabled) {
+  background-color: var(--color-secondary);
+  transform: scale(1.1);
+}
+
+.pager-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.pager-button svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;   /* inherit text color */
+  fill: currentColor;
+}
+
+.pager-index {
+  font-weight: 500;
+  color: var(--color-text-dark);
+  margin: 0 0.5rem;
+}
