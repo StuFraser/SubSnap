@@ -9,6 +9,8 @@
   align-items: center;
   box-sizing: border-box;
   padding: 1px 12px; 
+  margin-bottom: 12px;
+  margin-top: 12px;
 }
 
 .subreddit-title {

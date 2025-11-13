@@ -8,7 +8,7 @@ import Subreddit from "@/pages/subreddit/Subreddit";
 function App() {
 
   return (
-    <div className='App'>
+    <div className='app'>
       <Router>
         <Header />
         <div className="app-content">

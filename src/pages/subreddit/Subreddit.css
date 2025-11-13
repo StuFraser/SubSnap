@@ -5,26 +5,42 @@
   margin: 0 auto;
   padding: 0 12px;
   box-sizing: border-box;
+  height: 100%;
+  /*height: 84vh;*/
+  /*height: calc(100vh - 200px);*/
+  /*overflow-y: auto;*/
+  background-color: var(--color-bg-light);
 }
 
 .subreddit-header {
   position: sticky;
-  top: 0;
+  top: 0px;
   z-index: 50;
   flex-shrink: 0;
+  background-color: var(--color-bg-light);
 }
 
+.content-body {
+  flex-grow: 1;
+  gap: 12px;
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+  margin-bottom: 12px;
+  min-height: 0;
+}
 
-.content-scroll ul {
+.content-body ul {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  list-style-type: none;
 }
 
-li {
+.content-body li {
   list-style-type: none;
 }

@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPostsPage, selectPostsState, clearPosts } from "@/app/store/subredditPostSlice";
 import type { AppDispatch } from "@/app/store";
 //import Pager from "@/components/ui/pager/pager";
 import SubredditBanner from "@/features/subreddit/SubredditBanner";
 import Postcard from "@/components/postcard/Postcard";
+import Spinner from "@/components/ui/spinner/Spinner";
 import "./Subreddit.css";
 
 interface SubredditProps {
@@ -14,24 +15,41 @@ interface SubredditProps {
 const Subreddit: React.FC<SubredditProps> = ({ name }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { posts, after, currentPage, isLoading, error } = useSelector(selectPostsState);
+  const contentBodyRef = useRef<HTMLDivElement>(null);
+
+  const scrollToTop = () => {
+    console.log('Scrolling...', contentBodyRef)
+    if (contentBodyRef.current) {
+      console.log('got the context...')
+      contentBodyRef.current.scrollTop = 0;
+    }
+  };
+
 
   // Fetch first page on mount
   useEffect(() => {
     dispatch(fetchPostsPage({ subreddit: name, page: 1 }));
   }, [dispatch, name]);
 
-
-
   const handleNext = () => {
     if (!after) return;
+    dispatch(clearPosts());
     dispatch(fetchPostsPage({ subreddit: name, after, page: currentPage + 1 }));
+    scrollToTop();
   };
 
   const handlePrev = () => {
     if (currentPage <= 1) return;
-    // Resetting 'after' to undefined for previous page; slice fetches fresh
+    dispatch(clearPosts());
     dispatch(fetchPostsPage({ subreddit: name, page: currentPage - 1 }));
+    scrollToTop();
   };
+
+  const handleRefresh = () => {
+    dispatch(clearPosts());
+    dispatch(fetchPostsPage({ subreddit: name, page: 1 }));
+    scrollToTop();
+  }
 
   return (
     <div className="subreddit-page">
@@ -43,19 +61,16 @@ const Subreddit: React.FC<SubredditProps> = ({ name }) => {
           hasNext={!!after}
           onNext={handleNext}
           onPrev={handlePrev}
-          onRefresh={() => {
-            dispatch(clearPosts());
-            dispatch(fetchPostsPage({ subreddit: name, page: 1 }));
-          }}
+          onRefresh={handleRefresh}
           redditUrl={`https://www.reddit.com/r/${name}/new`}
           isLoading={isLoading}
         />
       </div>
 
-      {isLoading && <p>Loading posts...</p>}
+      {isLoading && <Spinner />}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <div className="content-scroll">
+      <div className="content-body" ref={contentBodyRef}>
         <ul>
           {posts.map((post) => (
             <li key={post.id}>
