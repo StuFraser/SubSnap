@@ -1,5 +1,6 @@
 import { redditFetch } from "./redditFetch";
 import type { Post } from "@/shared/models/Post";
+import { getValidThumbnail } from "./helpers/apiHelpers";
 
 const pageSize = 25;
 
@@ -35,7 +36,7 @@ export const fetchSubredditPost = async (
     url: child.data.url,
     score: child.data.score,
     over_18: child.data.over_18,
-    thumbnailUrl: child.data.thumbnail || null,
+    thumbnailUrl: getValidThumbnail(child.data.thumbnail),
     commentCount: child.data.num_comments,
     authorAvatarUrl: child.data.snoovatar_img || null,
   }));

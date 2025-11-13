@@ -1,0 +1,54 @@
+.post-card {
+  display: flex;
+  gap: 12px;
+  border: 2px solid var(--color-primary);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s;
+}
+
+.post-card:hover {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+}
+
+.post-thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.post-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-title {
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--color-primary);
+  font-size: 1rem;
+}
+
+.nsfw-tag {
+  color: red;
+  font-size: 0.75rem;
+  margin-left: 4px;
+}
+
+.post-meta {
+  font-size: 0.875rem;
+  color: #555;
+  margin: 4px 0;
+}
+
+.post-text {
+  font-size: 0.875rem;
+  color: #333;
+  margin-top: 4px;
+  overflow: hidden;
+}

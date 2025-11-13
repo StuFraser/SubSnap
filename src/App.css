@@ -1,10 +1,20 @@
 #root {
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  margin: 0;
   text-align: center;
+  height: 100%;
+}
+
+.app{
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .app-content {
-  padding-top: 110px; /* To ensure content is not hidden behind the fixed header */
+  flex-grow: 1;
+  padding: 0 12px;
+  overflow: hidden;
 }

@@ -20,8 +20,7 @@ const Header: React.FC = () => {
             <UserAvatar user={user} onLogout={logout} />
           ) : (
             <LoginButton />
-          )}
-          
+          )}         
         </div>
       </div>
       <div className="header-bottom">

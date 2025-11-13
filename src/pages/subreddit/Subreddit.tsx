@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPostsPage, selectPostsState, clearPosts } from "@/app/store/subredditPostSlice";
 import type { AppDispatch } from "@/app/store";
-import { Pager } from "@/components/ui/pager/pager";
+//import Pager from "@/components/ui/pager/pager";
+import SubredditBanner from "@/features/subreddit/SubredditBanner";
+import Postcard from "@/components/postcard/Postcard";
+import "./Subreddit.css";
 
 interface SubredditProps {
   name: string; // e.g., "reactjs"
@@ -17,6 +20,8 @@ const Subreddit: React.FC<SubredditProps> = ({ name }) => {
     dispatch(fetchPostsPage({ subreddit: name, page: 1 }));
   }, [dispatch, name]);
 
+
+
   const handleNext = () => {
     if (!after) return;
     dispatch(fetchPostsPage({ subreddit: name, after, page: currentPage + 1 }));
@@ -29,34 +34,39 @@ const Subreddit: React.FC<SubredditProps> = ({ name }) => {
   };
 
   return (
-    <div>
-      <h2>/r/{name}</h2>
+    <div className="subreddit-page">
+      <div className="subreddit-header">
+        <SubredditBanner
+          name={name}
+          title={`r/${name} - New Posts`}
+          currentPage={currentPage}
+          hasNext={!!after}
+          onNext={handleNext}
+          onPrev={handlePrev}
+          onRefresh={() => {
+            dispatch(clearPosts());
+            dispatch(fetchPostsPage({ subreddit: name, page: 1 }));
+          }}
+          redditUrl={`https://www.reddit.com/r/${name}/new`}
+          isLoading={isLoading}
+        />
+      </div>
 
       {isLoading && <p>Loading posts...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            <a href={post.url} target="_blank" rel="noopener noreferrer">{post.title}</a>
-            <p>by {post.author} | {post.score} points | {post.commentCount} comments</p>
-          </li>
-        ))}
-      </ul>
+      <div className="content-scroll">
+        <ul>
+          {posts.map((post) => (
+            <li key={post.id}>
+              <Postcard post={post} />
+            </li>
+          ))}
+        </ul>
+      </div>
 
-      <Pager
-        currentPage={currentPage}
-        hasNext={!!after}
-        onNext={handleNext}
-        onPrev={handlePrev}
-        onRefresh={() => {
-          dispatch(clearPosts());
-          dispatch(fetchPostsPage({ subreddit: name, page: 1 }));
-        }}
-        redditUrl={`https://www.reddit.com/r/${name}/new`}
-        isLoading={isLoading}
-      />
     </div>
+
   );
 };
 

@@ -15,7 +15,7 @@ interface PagerProps {
   isLoading?: boolean;
 }
 
-export const Pager: React.FC<PagerProps> = ({
+const Pager: React.FC<PagerProps> = ({
   currentPage,
   hasNext,
   onNext,
@@ -50,3 +50,5 @@ export const Pager: React.FC<PagerProps> = ({
     </div>
   );
 };
+
+export default Pager;
