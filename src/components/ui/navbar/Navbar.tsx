@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "@/shared/context/AuthContext";
+import Search from "../search/Search";
 import "./Navbar.css";
 
 const Navbar: React.FC = () => {
@@ -13,12 +14,6 @@ const Navbar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="nav-container">
-        <div className="nav-logo">
-          <Link to="/" className="nav-logo-link">
-            SubSnap
-          </Link>
-        </div>
-
         <button
           className={`burger ${isOpen ? "open" : ""}`}
           onClick={toggleMenu}
@@ -30,23 +25,28 @@ const Navbar: React.FC = () => {
         </button>
 
         <ul className={`nav-links ${isOpen ? "open" : ""}`}>
-          <li>
-            <Link to="/subreddit/popular" className="nav-link" onClick={closeMenu}>
-              Popular
-            </Link>
-          </li>
           {user && (
-            <li>
-              <Link
-                to="/my-subreddits"
-                className="nav-link"
-                onClick={closeMenu}
-              >
-                My Subreddits
-              </Link>
-            </li>
+            <>
+              <li>
+                <Link to="/subreddit/popular" className="nav-link" onClick={closeMenu}>
+                  Popular
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/subscribed"
+                  className="nav-link"
+                  onClick={closeMenu}
+                >
+                  My Subreddits
+                </Link>
+              </li>
+            </>
           )}
         </ul>
+      </div>
+      <div className="search">
+        <Search enabled={!user} onSearch={() => { }} />
       </div>
     </nav>
   );

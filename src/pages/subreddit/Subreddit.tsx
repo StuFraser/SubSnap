@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/shared/hooks/hooks";
 import { fetchPostsPage, selectPostsState, clearPosts } from "@/app/store/subredditPostSlice";
-import type { AppDispatch } from "@/app/store";
 //import Pager from "@/components/ui/pager/pager";
 import SubredditBanner from "@/features/subreddit/SubredditBanner";
 import Postcard from "@/components/postcard/Postcard";
@@ -13,8 +12,8 @@ interface SubredditProps {
 }
 
 const Subreddit: React.FC<SubredditProps> = ({ name }) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { posts, after, currentPage, isLoading, error } = useSelector(selectPostsState);
+  const dispatch = useAppDispatch();
+  const { posts, after, currentPage, isLoading, error } = useAppSelector(selectPostsState);
   const contentBodyRef = useRef<HTMLDivElement>(null);
 
   const scrollToTop = () => {

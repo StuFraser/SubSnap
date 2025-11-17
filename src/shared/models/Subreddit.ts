@@ -1,10 +1,11 @@
 export interface Subreddit {
   id: string;
-  name?: string;           // note: you used Name vs display_name — map carefully
+  name?: string;          
   displayName: string;
   description: string | null;
-  url: string;             // full url
+  url: string;             
   relativeUrl: string;
   banner?: string | null;
   icon?: string | null;
+  subscribers: number;
 }

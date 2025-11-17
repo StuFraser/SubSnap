@@ -1,0 +1,98 @@
+/* ===================================
+   Search Component Styles
+   =================================== */
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  min-width: 150px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 6px 32px 6px 12px;
+  border: 1px solid var(--color-border-white-medium);
+  border-radius: 9999px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  background-color: var(--color-interactive-bg);
+  color: var(--color-text-white);
+  backdrop-filter: blur(4px);
+}
+
+.search-input::placeholder {
+  color: var(--color-interactive-text-placeholder);
+}
+
+.search-input:focus {
+  border-color: var(--color-primary);
+  background-color: var(--color-interactive-bg-hover);
+}
+
+.search-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.search-button {
+  position: absolute;
+  right: 6px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--color-interactive-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+}
+
+.search-button:hover:not(:disabled) {
+  color: var(--color-primary);
+  background-color: var(--color-interactive-hover);
+}
+
+.search-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.search-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ===================================
+   Responsive Styles (using data attributes from ResponsiveProvider)
+   =================================== */
+
+/* Tablet and below */
+[data-mobile="true"] .search-container {
+  max-width: none;
+  min-width: 0;
+}
+
+/* Small mobile */
+[data-small-mobile="true"] .search-input {
+  font-size: 13px;
+  padding: 5px 28px 5px 10px;
+}
+
+[data-small-mobile="true"] .search-button {
+  right: 4px;
+  width: 20px;
+  height: 20px;
+}
+
+[data-small-mobile="true"] .search-icon {
+  width: 14px;
+  height: 14px;
+}
