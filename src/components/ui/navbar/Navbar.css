@@ -13,14 +13,6 @@
   align-items: center;
 }
 
-.nav-logo-link {
-  color: #ff4500;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-/* Desktop nav links */
 .nav-links {
   display: flex;
   list-style: none;

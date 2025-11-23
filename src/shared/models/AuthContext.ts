@@ -7,4 +7,5 @@ export interface AuthContext {
   login: (token: AuthToken) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
+  isAuthenticated: boolean;
 }

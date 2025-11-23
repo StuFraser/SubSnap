@@ -37,6 +37,7 @@ export const useAuth = () => {
   const [token, setToken] = useState<AuthToken | null>(sessionService.getToken() || null);
   const [isLoading, setIsLoading] = useState(false);
 
+
   const hasInitialized = useRef(false);
 
   useEffect(() => {
@@ -149,5 +150,7 @@ export const useAuth = () => {
     setToken(null);
   };
 
-  return { user, token, isLoading, login, completeLogin, logout };
+  const isAuthenticated = user !== null;
+
+  return { user, token, isLoading, login, completeLogin, logout, isAuthenticated };
 };
